@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Promise, Await and Async Example</title>
+	<script>
+		/*
+		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+		Google: promisify redis node
+		https://hackernoon.com/node8s-util-promisify-is-so-freakin-awesome-1d90c184bf44
+		https://blog.risingstack.com/mastering-async-await-in-nodejs/
+		http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/
+		https://stackoverflow.com/questions/46472741/using-promise-with-redis-callback
+												
+		Promise.resolve().then(function() {
+			return new Promise(function(resolve, reject) {
+				;
+			});
+		}).catch(function(err) {
+			console.log(err);
+		});
+		*/
+
+		var isError = false;
+
+		/*
+		var xPromise = new Promise((resolve, reject) => {
+			if (isError) reject("This is an error!");
+			else resolve("This is a success!");
+		});
+
+		xPromise.then(function(res) {
+			console.log("SUCCESS:", res);
+		}).catch(function(err) {
+			console.log("ERROR:", err);
+		});
+		*/
+
+		// TEST:setTimeout()
+		function testSetTimeout() {
+			Promise.resolve("Let the eat begin!").then(function (val) {
+				console.log(val);
+
+				return new Promise(function (resolve, reject) {
+					setTimeout(function () {
+						console.log("Hot dogs!");
+						resolve("Chicken wings!");
+					}, 2000);
+				});
+			}).then(function (val) {
+				console.log(val);
+
+				return new Promise(function (resolve, reject) {
+					setTimeout(function () {
+						console.log("Burgers!");
+						resolve("French fries!");
+					}, 2000);
+				});
+			}).then(function (val) {
+				console.log(val);
+			}).catch(function (err) {
+				console.log("ERROR:", err);
+			});
+		}
+
+		// TEST:JSON Chain
+		function testJsonChain() {
+			var x = {};
+
+			x.a = (50 + 50 + 50 + 50) / 2;
+			x.b = 200;
+			x.c = 'cat';
+
+			Promise.resolve(x).then(function (val) {
+				console.log("FIRST", val);
+
+				return new Promise(function (resolve, reject) {
+					val.a = 150;
+					resolve(val);
+				});
+			}).then(function (val) {
+				console.log("SECOND", val);
+
+				return new Promise(function (resolve, reject) {
+					testJsonChainDataManipulation(val);
+					resolve(val);
+				});
+			}).then(function (val) {
+				console.log("THIRD", val);
+
+				return new Promise(function (resolve, reject) {
+					val.c = 'mule';
+					resolve(val);
+				});
+			}).then(function (val) {
+				console.log("FOURTH", val);
+			}).catch(function (err) {
+				console.log("ERROR:", err);
+			});
+		}
+
+		function testJsonChainDataManipulation(z) {
+			z.b += 50;
+			//return z;
+		}
+
+		// TEST:Promise.resolve()
+		function testPromiseResolve() {
+			Promise.resolve().then(function () {
+				return testPromiseResolveTester("cat");
+			}).then(function (val) {
+				console.log(val);
+			}).catch(function (err) {
+				console.log(err);
+			});
+		}
+
+		function testPromiseResolveTester(testVal) {
+			return Promise.resolve(testVal).then(function (val) {
+				return new Promise(function (resolve, reject) {
+					(function () {
+						(function () {
+							if (val == "cat") resolve("bat");
+							else resolve("ack");
+						})();
+					})();
+				});
+			}).catch(function (err) {
+				console.log("ERROR:testPromiseResolveTester()", err);
+			});
+		}
+
+		//testJsonChain();
+		testPromiseResolve();
+	</script>
+</head>
+
+<body>
+
+
+</body>
+
+</html>
