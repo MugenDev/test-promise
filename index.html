@@ -4,37 +4,7 @@
 <head>
 	<title>Promise, Await and Async Example</title>
 	<script>
-		/*
-		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
-		Google: promisify redis node
-		https://hackernoon.com/node8s-util-promisify-is-so-freakin-awesome-1d90c184bf44
-		https://blog.risingstack.com/mastering-async-await-in-nodejs/
-		http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/
-		https://stackoverflow.com/questions/46472741/using-promise-with-redis-callback
-												
-		Promise.resolve().then(function() {
-			return new Promise(function(resolve, reject) {
-				;
-			});
-		}).catch(function(err) {
-			console.log(err);
-		});
-		*/
-
 		var isError = false;
-
-		/*
-		var xPromise = new Promise((resolve, reject) => {
-			if (isError) reject("This is an error!");
-			else resolve("This is a success!");
-		});
-
-		xPromise.then(function(res) {
-			console.log("SUCCESS:", res);
-		}).catch(function(err) {
-			console.log("ERROR:", err);
-		});
-		*/
 
 		// TEST:setTimeout()
 		function testSetTimeout() {
@@ -136,8 +106,6 @@
 </head>
 
 <body>
-
-
 </body>
 
 </html>
